@@ -72,7 +72,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
     }
 
-    private void enableHeadServiceCheckbox(boolean enabled) {
+    public void enableHeadServiceCheckbox(boolean enabled) {
         getPreferenceScreen().findPreference(SERVICE_ENABLED_KEY).setEnabled(enabled);
     }
 
@@ -81,7 +81,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         context.startService(new Intent(context, HeadService.class));
     }
 
-    private void stopHeadService() {
+    public void stopHeadService() {
         Context context = getActivity();
         context.stopService(new Intent(context, HeadService.class));
     }
