@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 /*******************************************************************************
  * Creates the head layer view which is displayed directly on window manager.
@@ -28,24 +30,41 @@ public class HeadLayer extends View {
         super(context);
         mContext = context;
         mFrameLayout = new FrameLayout(mContext);
+        addTo_new_WindowManager();
         addToWindowManager();
     }
+
+    private void addTo_new_WindowManager() {
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                // WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                PixelFormat.TRANSLUCENT);
+        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        ImageButton mButton = new ImageButton(mContext);
+        mButton.setImageResource(R.drawable.toggle);
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        wm.addView(mButton, params);
+    }
+
 
     private void addToWindowManager() {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+               // WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 PixelFormat.TRANSLUCENT);
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mWindowManager.addView(mFrameLayout, params);
 
-
-
-        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // Here is the place where you can inject whatever layout you want.
+        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.head, mFrameLayout);
+
 
         /**************************************************************************
          * Overlay Buttons
@@ -63,6 +82,13 @@ public class HeadLayer extends View {
                 }
             }
         });
+//        ImageView above_head_toggle = (ImageView) mFrameLayout.findViewById(R.id.touch_toggle);
+//        above_head_toggle.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(mContext, "Works!", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         /**************************************************************************
          * Overlay Touch
@@ -226,4 +252,5 @@ public class HeadLayer extends View {
     public void destroy() {
         mWindowManager.removeView(mFrameLayout);
     }
+
 }

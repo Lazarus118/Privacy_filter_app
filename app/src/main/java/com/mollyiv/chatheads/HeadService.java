@@ -7,14 +7,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
-/**
+/*******************************************************************
  * Foreground service. Creates a head view.
  * The pending intent allows to go back to the settings activity.
- */
+ *******************************************************************/
 public class HeadService extends Service {
 
     private final static int FOREGROUND_ID = 999;
-
     private HeadLayer mHeadLayer;
 
     @Override
@@ -25,14 +24,10 @@ public class HeadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         logServiceStarted();
-
         initHeadLayer();
-
         PendingIntent pendingIntent = createPendingIntent();
         Notification notification = createNotification(pendingIntent);
-
         startForeground(FOREGROUND_ID, notification);
-
         return START_STICKY;
     }
 
@@ -40,7 +35,6 @@ public class HeadService extends Service {
     public void onDestroy() {
         destroyHeadLayer();
         stopForeground(true);
-
         logServiceEnded();
     }
 
