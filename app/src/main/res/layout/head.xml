@@ -40,24 +40,6 @@
                 android:layout_weight="1"/>
 
 
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/gadge2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="0dp"
-                    android:paddingStart="350dp"
-                    android:paddingLeft="350dp"
-                    android:src="@drawable/gadge"
-                    android:layout_weight="1"/>
-            </FrameLayout>
-
-
             <SeekBar
                 android:visibility="gone"
                 android:layout_width="match_parent"
