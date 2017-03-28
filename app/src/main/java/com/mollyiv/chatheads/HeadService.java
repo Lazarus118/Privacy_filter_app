@@ -42,7 +42,7 @@ public class HeadService extends Service {
         mHeadLayer = new HeadLayer(this);
     }
 
-    private void destroyHeadLayer() {
+    public void destroyHeadLayer() {
         mHeadLayer.destroy();
         mHeadLayer = null;
     }

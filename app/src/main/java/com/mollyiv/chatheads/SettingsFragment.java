@@ -16,7 +16,6 @@ import android.widget.Toast;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final static String SERVICE_ENABLED_KEY = "serviceEnabledKey";
-
     private PermissionChecker mPermissionChecker;
 
     @Override
