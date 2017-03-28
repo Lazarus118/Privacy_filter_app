@@ -28,14 +28,17 @@ public class HeadLayer extends View {
     private Context mContext;
     private FrameLayout mFrameLayout;
     private WindowManager mWindowManager;
+
     // =================================================================== //
     public HeadLayer(Context context) {
         super(context);
         mContext = context;
         mFrameLayout = new FrameLayout(mContext);
         addTo_new_WindowManager();
-        addToWindowManager();
+        addToWindowManager(1);
     }
+
+
     // =================================================================== //
     private void addTo_new_WindowManager() {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -53,28 +56,34 @@ public class HeadLayer extends View {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "Works", Toast.LENGTH_LONG).show();
+                addToWindowManager(2);
             }
         });
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.addView(mButton, params);
     }
-    // =================================================================== //
-    private void addToWindowManager() {
-        WindowManager.LayoutParams params1 = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                PixelFormat.TRANSLUCENT);
 
-        WindowManager.LayoutParams params2 = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                PixelFormat.TRANSLUCENT);
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        mWindowManager.addView(mFrameLayout, params2);
+    // =================================================================== //
+    private void addToWindowManager(int id) {
+        if (id == 1) {
+            WindowManager.LayoutParams params1 = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    PixelFormat.TRANSLUCENT);
+            mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            mWindowManager.addView(mFrameLayout, params1);
+        } else {
+            WindowManager.LayoutParams params2 = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                    PixelFormat.TRANSLUCENT);
+            mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            mWindowManager.addView(mFrameLayout, params2);
+        }
         // =================================================================== //
         // Here is the place where you can inject whatever layout you want.
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -265,10 +274,12 @@ public class HeadLayer extends View {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
     }
 
