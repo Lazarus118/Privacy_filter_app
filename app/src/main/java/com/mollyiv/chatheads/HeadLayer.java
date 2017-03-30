@@ -106,11 +106,12 @@ public class HeadLayer extends View {
     // =================================================================== //
     private void button_bg_windowManager() {
         final WindowManager.LayoutParams button_bg_params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 PixelFormat.TRANSLUCENT);
+        button_bg_params.gravity = Gravity.TOP;
         button_bg.setBackgroundColor(Color.TRANSPARENT);
         button_bg.setImageResource(R.drawable.button_bg);
         button_bg_WindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
