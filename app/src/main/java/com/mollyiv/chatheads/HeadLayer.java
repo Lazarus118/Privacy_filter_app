@@ -24,63 +24,152 @@ import android.widget.Toast;
  *****************************************************************************/
 public class HeadLayer extends View {
     private LinearLayout ll, l2t, l3t, l4t, l5t, l6t;
-    private ImageView opacity_btn;
-    private SeekBar sb;
+    public SeekBar sb;
     private Context mContext;
     private FrameLayout mFrameLayout;
-    private WindowManager mWindowManager;
+    private WindowManager mWindowManager, seekbar_WindowManager;
     // =================================================================== //
     public HeadLayer(Context context) {
         super(context);
         mContext = context;
         mFrameLayout = new FrameLayout(mContext);
+        sb = new SeekBar(mContext);
         toggle_windowManager();
-        off_windowManager();
         addToWindowManager();
     }
     // =================================================================== //
     private void toggle_windowManager() {
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+        final WindowManager.LayoutParams toggle_params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 PixelFormat.TRANSLUCENT);
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        params.gravity = Gravity.END;
-        params.gravity = Gravity.BOTTOM;
-        ImageButton mButton = new ImageButton(mContext);
+        toggle_params.gravity = Gravity.END;
+        final ImageButton mButton = new ImageButton(mContext);
         mButton.setImageResource(R.drawable.on_off);
         mButton.setBackgroundColor(Color.TRANSPARENT);
+        mButton.setTag(1);
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Works", Toast.LENGTH_LONG).show();
+                if (mButton.getTag().equals(1)) {
+                    seekbar_windowManager(1);
+                    mButton.setTag(2);
+                } else if (mButton.getTag().equals(2)) {
+                    seekbar_windowManager(2);
+                    mButton.setTag(1);
+                }
             }
         });
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        wm.addView(mButton, params);
+        wm.addView(mButton, toggle_params);
     }
-    private void off_windowManager() {
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
+    private void seekbar_windowManager(int id) {
+        final WindowManager.LayoutParams seekbar_params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 PixelFormat.TRANSLUCENT);
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        params.gravity = Gravity.END;
-        params.gravity = Gravity.CENTER;
-        ImageButton mButton = new ImageButton(mContext);
-        mButton.setImageResource(R.drawable.on_off);
-        mButton.setBackgroundColor(Color.TRANSPARENT);
-        mButton.setOnClickListener(new OnClickListener() {
+        ll = (LinearLayout) mFrameLayout.findViewById(R.id.l1);
+        l2t = (LinearLayout) mFrameLayout.findViewById(R.id.l2);
+        l3t = (LinearLayout) mFrameLayout.findViewById(R.id.l3);
+        l4t = (LinearLayout) mFrameLayout.findViewById(R.id.l4);
+        l5t = (LinearLayout) mFrameLayout.findViewById(R.id.l5);
+        l6t = (LinearLayout) mFrameLayout.findViewById(R.id.l6);
+        seekbar_params.gravity = Gravity.CENTER;
+        /**************************************************************************
+         * Seekbar
+         **************************************************************************/
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (i == 10) {
+                    ll.setAlpha((float) 0.9);
+                    l2t.setAlpha((float) 0.9);
+                    l3t.setAlpha((float) 0.9);
+                    l4t.setAlpha((float) 0.9);
+                    l5t.setAlpha((float) 0.9);
+                    l6t.setAlpha((float) 0.9);
+                } else if (i == 20) {
+                    ll.setAlpha((float) 0.8);
+                    l2t.setAlpha((float) 0.8);
+                    l3t.setAlpha((float) 0.8);
+                    l4t.setAlpha((float) 0.8);
+                    l5t.setAlpha((float) 0.8);
+                    l6t.setAlpha((float) 0.8);
+                } else if (i == 30) {
+                    ll.setAlpha((float) 0.7);
+                    l2t.setAlpha((float) 0.7);
+                    l3t.setAlpha((float) 0.7);
+                    l4t.setAlpha((float) 0.7);
+                    l5t.setAlpha((float) 0.7);
+                    l6t.setAlpha((float) 0.7);
+                } else if (i == 40) {
+                    ll.setAlpha((float) 0.6);
+                    l2t.setAlpha((float) 0.6);
+                    l3t.setAlpha((float) 0.6);
+                    l4t.setAlpha((float) 0.6);
+                    l5t.setAlpha((float) 0.6);
+                    l6t.setAlpha((float) 0.6);
+                } else if (i == 50) {
+                    ll.setAlpha((float) 0.5);
+                    l2t.setAlpha((float) 0.5);
+                    l3t.setAlpha((float) 0.5);
+                    l4t.setAlpha((float) 0.5);
+                    l5t.setAlpha((float) 0.5);
+                    l6t.setAlpha((float) 0.5);
+                } else if (i == 60) {
+                    ll.setAlpha((float) 0.4);
+                    l2t.setAlpha((float) 0.4);
+                    l3t.setAlpha((float) 0.4);
+                    l4t.setAlpha((float) 0.4);
+                    l5t.setAlpha((float) 0.4);
+                    l6t.setAlpha((float) 0.4);
+                } else if (i == 70) {
+                    ll.setAlpha((float) 0.3);
+                    l2t.setAlpha((float) 0.3);
+                    l3t.setAlpha((float) 0.3);
+                    l4t.setAlpha((float) 0.3);
+                    l5t.setAlpha((float) 0.3);
+                    l6t.setAlpha((float) 0.3);
+                } else if (i == 80) {
+                    ll.setAlpha((float) 0.2);
+                    l2t.setAlpha((float) 0.2);
+                    l3t.setAlpha((float) 0.2);
+                    l4t.setAlpha((float) 0.2);
+                    l5t.setAlpha((float) 0.2);
+                    l6t.setAlpha((float) 0.2);
+                } else if (i == 90) {
+                    ll.setAlpha((float) 0.1);
+                    l2t.setAlpha((float) 0.1);
+                    l3t.setAlpha((float) 0.1);
+                    l4t.setAlpha((float) 0.1);
+                    l5t.setAlpha((float) 0.1);
+                    l6t.setAlpha((float) 0.1);
+                } else if (i == 100) {
+                    ll.setAlpha(0);
+                    l2t.setAlpha(0);
+                    l3t.setAlpha(0);
+                    l4t.setAlpha(0);
+                    l5t.setAlpha(0);
+                    l6t.setAlpha(0);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        wm.addView(mButton, params);
+        seekbar_WindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        if (id == 1) {
+            seekbar_WindowManager.addView(sb, seekbar_params);
+        } else if (id == 2){
+            seekbar_WindowManager.removeView(sb);
+        }
     }
     // =================================================================== //
     private void addToWindowManager() {
@@ -107,22 +196,6 @@ public class HeadLayer extends View {
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.head, mFrameLayout);
 
-        /**************************************************************************
-         * Overlay Buttons
-         **************************************************************************/
-//        opacity_btn = (ImageView) mFrameLayout.findViewById(R.id.gadge);
-//        ll = (LinearLayout) mFrameLayout.findViewById(R.id.l1);
-//        opacity_btn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ll.setSelected(!ll.isSelected());
-//                if (ll.isSelected()) {
-//                    sb.setVisibility(VISIBLE);
-//                } else {
-//                    sb.setVisibility(GONE);
-//                }
-//            }
-//        });
 
         /**************************************************************************
          * Overlay Touch
@@ -210,95 +283,6 @@ public class HeadLayer extends View {
 //                return false;
 //            }
 //        });
-
-        /**************************************************************************
-         * Seekbar
-         **************************************************************************/
-        sb = (SeekBar) mFrameLayout.findViewById(R.id.seekBar2);
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i == 10) {
-                    ll.setAlpha((float) 0.9);
-                    l2t.setAlpha((float) 0.9);
-                    l3t.setAlpha((float) 0.9);
-                    l4t.setAlpha((float) 0.9);
-                    l5t.setAlpha((float) 0.9);
-                    l6t.setAlpha((float) 0.9);
-                } else if (i == 20) {
-                    ll.setAlpha((float) 0.8);
-                    l2t.setAlpha((float) 0.8);
-                    l3t.setAlpha((float) 0.8);
-                    l4t.setAlpha((float) 0.8);
-                    l5t.setAlpha((float) 0.8);
-                    l6t.setAlpha((float) 0.8);
-                } else if (i == 30) {
-                    ll.setAlpha((float) 0.7);
-                    l2t.setAlpha((float) 0.7);
-                    l3t.setAlpha((float) 0.7);
-                    l4t.setAlpha((float) 0.7);
-                    l5t.setAlpha((float) 0.7);
-                    l6t.setAlpha((float) 0.7);
-                } else if (i == 40) {
-                    ll.setAlpha((float) 0.6);
-                    l2t.setAlpha((float) 0.6);
-                    l3t.setAlpha((float) 0.6);
-                    l4t.setAlpha((float) 0.6);
-                    l5t.setAlpha((float) 0.6);
-                    l6t.setAlpha((float) 0.6);
-                } else if (i == 50) {
-                    ll.setAlpha((float) 0.5);
-                    l2t.setAlpha((float) 0.5);
-                    l3t.setAlpha((float) 0.5);
-                    l4t.setAlpha((float) 0.5);
-                    l5t.setAlpha((float) 0.5);
-                    l6t.setAlpha((float) 0.5);
-                } else if (i == 60) {
-                    ll.setAlpha((float) 0.4);
-                    l2t.setAlpha((float) 0.4);
-                    l3t.setAlpha((float) 0.4);
-                    l4t.setAlpha((float) 0.4);
-                    l5t.setAlpha((float) 0.4);
-                    l6t.setAlpha((float) 0.4);
-                } else if (i == 70) {
-                    ll.setAlpha((float) 0.3);
-                    l2t.setAlpha((float) 0.3);
-                    l3t.setAlpha((float) 0.3);
-                    l4t.setAlpha((float) 0.3);
-                    l5t.setAlpha((float) 0.3);
-                    l6t.setAlpha((float) 0.3);
-                } else if (i == 80) {
-                    ll.setAlpha((float) 0.2);
-                    l2t.setAlpha((float) 0.2);
-                    l3t.setAlpha((float) 0.2);
-                    l4t.setAlpha((float) 0.2);
-                    l5t.setAlpha((float) 0.2);
-                    l6t.setAlpha((float) 0.2);
-                } else if (i == 90) {
-                    ll.setAlpha((float) 0.1);
-                    l2t.setAlpha((float) 0.1);
-                    l3t.setAlpha((float) 0.1);
-                    l4t.setAlpha((float) 0.1);
-                    l5t.setAlpha((float) 0.1);
-                    l6t.setAlpha((float) 0.1);
-                } else if (i == 100) {
-                    ll.setAlpha(0);
-                    l2t.setAlpha(0);
-                    l3t.setAlpha(0);
-                    l4t.setAlpha(0);
-                    l5t.setAlpha(0);
-                    l6t.setAlpha(0);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
     }
 
     /**************************************************************************
