@@ -1,5 +1,4 @@
 package com.mollyiv.chatheads;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-
 /*******************************************************************************
  * Creates the head layer view which is displayed directly on window manager.
  * It means that the view is above every application's view on your phone -
@@ -23,14 +20,11 @@ public class HeadLayer extends View {
     private LinearLayout ll, l2t, l3t, l4t, l5t, l6t;
     public SeekBar sb;
     private Context mContext;
-    private ImageView button_bg;
     private ImageButton op_btn;
     private FrameLayout mFrameLayout;
     private WindowManager mWindowManager;
     private WindowManager seekbar_WindowManager;
     private WindowManager opacity_WindowManager;
-    private WindowManager button_bg_WindowManager;
-
     // =================================================================== //
     public HeadLayer(Context context) {
         super(context);
@@ -38,13 +32,10 @@ public class HeadLayer extends View {
         mFrameLayout = new FrameLayout(mContext);
         sb = new SeekBar(mContext);
         op_btn = new ImageButton(mContext);
-        button_bg = new ImageView(mContext);
         opacity_windowManager();
         toggle_windowManager();
-        button_bg_windowManager();
-        addToWindowManager();
+        addToWindowManager(1);
     }
-
     // =================================================================== //
     private void opacity_windowManager() {
         final WindowManager.LayoutParams opacity_params = new WindowManager.LayoutParams(
@@ -72,7 +63,6 @@ public class HeadLayer extends View {
         opacity_WindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         opacity_WindowManager.addView(op_btn, opacity_params);
     }
-
     // =================================================================== //
     private void toggle_windowManager() {
         final WindowManager.LayoutParams toggle_params = new WindowManager.LayoutParams(
@@ -89,35 +79,18 @@ public class HeadLayer extends View {
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                destroy();
-//                if (mButton.getTag().equals(1)) {
-//                    addToWindowManager();
-//                    mButton.setTag(2);
-//                } else if (mButton.getTag().equals(2)) {
-//                    addToWindowManager_touchable();
-//                    mButton.setTag(1);
-//                }
+                if (mButton.getTag().equals(1)) {
+                    addToWindowManager(2);
+                    mButton.setTag(2);
+                } else if (mButton.getTag().equals(2)) {
+                    addToWindowManager(1);
+                    mButton.setTag(1);
+                }
             }
         });
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.addView(mButton, toggle_params);
     }
-
-    // =================================================================== //
-    private void button_bg_windowManager() {
-        final WindowManager.LayoutParams button_bg_params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                PixelFormat.TRANSLUCENT);
-        button_bg_params.gravity = Gravity.TOP;
-        button_bg.setBackgroundColor(Color.TRANSPARENT);
-        button_bg.setImageResource(R.drawable.button_bg);
-        button_bg_WindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        button_bg_WindowManager.addView(button_bg, button_bg_params);
-    }
-
     // =================================================================== //
     private void seekbar_windowManager(int id) {
         final WindowManager.LayoutParams seekbar_params = new WindowManager.LayoutParams(
@@ -227,34 +200,28 @@ public class HeadLayer extends View {
             seekbar_WindowManager.removeView(sb);
         }
     }
-
     // =================================================================== //
-    private void addToWindowManager() {
+    private void addToWindowManager(int id) {
         WindowManager.LayoutParams main_params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 PixelFormat.TRANSLUCENT);
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        mWindowManager.addView(mFrameLayout, main_params);
-        // =================================================================== //
-        // Here is the place where you can inject whatever layout you want.
-        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        layoutInflater.inflate(R.layout.head, mFrameLayout);
-    }
-
-    // =================================================================== //
-    private void addToWindowManager_touchable() {
         WindowManager.LayoutParams main_params_touchable = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 PixelFormat.TRANSLUCENT);
-        WindowManager mWindowManager_touchable = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        mWindowManager_touchable.addView(mFrameLayout, main_params_touchable);
-
+        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        if (id == 1) {
+            mWindowManager.addView(mFrameLayout, main_params_touchable);
+        } else if (id == 2) {
+            // mWindowManager.removeView(mFrameLayout);
+            mWindowManager.updateViewLayout(mFrameLayout, main_params);
+            // mWindowManager.addView(mFrameLayout, main_params);
+        }
         // =================================================================== //
         // Here is the place where you can inject whatever layout you want.
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -346,7 +313,6 @@ public class HeadLayer extends View {
             }
         });
     }
-
     /**************************************************************************
      * Removes the view from window manager.
      **************************************************************************/
@@ -354,7 +320,6 @@ public class HeadLayer extends View {
         mWindowManager.removeView(mFrameLayout);
         seekbar_WindowManager.removeView(sb);
         opacity_WindowManager.removeView(op_btn);
-        button_bg_WindowManager.removeView(button_bg);
     }
 
 }
